@@ -8,12 +8,12 @@
             </h1>
 
             <span class="font-light text-gray-500 italic">
-                Example
+                Hello user <p class="font-bold">{{ app.user ? app.user.email : '' }}</p>
             </span>
         </div>
     </div>
 
-    {% if app.user %}
+    {% if is_granted('ROLE_ADMIN') %}
         <div class="mx-auto w-4/5 my-8">
             <a
                     href="/movies/create"
@@ -39,7 +39,7 @@
                 </h2>
 
                 <span class="text-gray-500">
-                    By <span class="italic text-sm text-gray-800">VakaZona
+                    By <span class="italic text-sm text-gray-800">Other info
                 </span>
 
                 <p class="text-base text-gray-700 pt-4 pb-10 leading-8 font-light">
