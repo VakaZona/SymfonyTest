@@ -25,12 +25,42 @@ class MoviesController extends AbstractController
     }
 
     #[Route('/movies', name: 'movies')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $movies =  $this->movieRepository->findAll();
 
+        $movie = new Movie();
+        $form = $this->createForm(MovieFormType::class, $movie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $newMovie = $form->getData();
+
+            $imagePath =  $form->get('imagePath')->getData();
+            if ($imagePath) {
+                $newFileName = uniqid() . '.' . $imagePath->guessExtension();
+
+                try {
+                    $imagePath->move(
+                        $this->getParameter('kernel.project_dir') . '/public/uploads',
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    return new Response($e->getMessage());
+                }
+
+                $newMovie->setImagePath('/uploads/' . $newFileName);
+            }
+
+            $this->em->persist($newMovie);
+            $this->em->flush();
+
+            return $this->redirectToRoute('movies');
+        }
+
         return $this->render('movies/index.html.twig', [
-            'movies' => $movies
+            'movies' => $movies,
+            'form' => $form->createView()
         ]);
     }
 
@@ -76,6 +106,8 @@ class MoviesController extends AbstractController
                 return $this->redirectToRoute('movies');
             }
         }
+
+
 
         return $this->render('movies/edit.html.twig', [
             'movie' => $movie,
