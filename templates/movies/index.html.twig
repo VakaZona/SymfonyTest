@@ -126,11 +126,22 @@
             function modalHandler(val) {
                 if (val) {
                     fadeIn(modal);
+                    disableScrolling();
                     formMovie.addEventListener('submit', submitForm);
                 } else {
                     fadeOut(modal);
+                    enableScrolling();
                 }
 
+            }
+            function disableScrolling(){
+                var x=window.scrollX;
+                var y=window.scrollY;
+                window.onscroll=function(){window.scrollTo(x, y);};
+            }
+
+            function enableScrolling(){
+                window.onscroll=function(){};
             }
             function submitForm(event) {
                 event.preventDefault();
@@ -157,8 +168,12 @@
                     })
                     .catch((error) => {
                         console.error('Error:', error);
+
                     });
+                alert('Movie added')
+                fadeOut(modal);
             }
+
             function fadeOut(el) {
                 el.style.opacity = 1;
                 (function fade() {
