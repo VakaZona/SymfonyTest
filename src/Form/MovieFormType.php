@@ -18,37 +18,38 @@ class MovieFormType extends AbstractType
         $builder
             ->add('title',TextType::class, [
                 'attr' => array(
-                    'class' => 'bg-transparent block mt-10 border-b-2 w-full h-20 text-6xl outline-none',
-                    'placeholder' => 'Enter title...'
+                    'class' => 'mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border',
+                    'placeholder' => 'House of the dragon'
                 ),
-                'label' => false,
-                'required' => false
+                'label' => 'Title',
+                'required' => true
             ])
             ->add('releaseYear', IntegerType::class, [
                 'attr' => array(
-                    'class' => 'bg-transparent block mt-10 border-b-2 w-full h-20 text-6xl outline-none',
-                    'placeholder' => 'Enter release year...',
+                    'class' => 'mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border',
+                    'placeholder' => '2022',
 
                 ),
-                'label' => false,
-                'required' => false
+                'label' => 'Release year',
+                'required' => true
             ])
             ->add('description', TextareaType::class, [
                 'attr' => array(
-                    'class' => 'bg-transparent block mt-10 border-b-2 w-full h-60 text-6xl outline-none',
-                    'placeholder' => 'Enter description...',
+                    'class' => 'mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border',
+                    
 
                 ),
-                'label' => false,
-                'required' => false
+                'label' => 'Description',
+                'required' => true
             ])
-            ->add('imagePath', FileType::class, array(
-                'required' => false,
+            ->add('imagePath', FileType::class, [
+                'attr' => array(
+                    'class' => 'mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border',
+                ),
+                'required' => true,
                 'mapped' => false,
-                'required' => false
-
-
-            ))
+                'label' => 'Poster'
+            ])
             //->add('actors')
         ;
     }
